@@ -1,0 +1,39 @@
+language: node_js
+node_js:
+  - "8.9.1"
+
+branches:
+only:
+  - blog
+
+cache:
+directories:
+  - node_modules
+
+before_install:
+  - npm install npm@latest -g
+  - npm update -g
+  - cd ..
+
+install:
+  - npm install hexo-cli -g
+  - hexo init blog
+  - cd blog
+  - /bin/cp -rf ../agenric.github.io/package.json package.json
+  - cat package.json
+  - npm install
+
+script:
+  - /bin/cp -rf ../agenric.github.io/_config.yml _config.yml
+  - rm -rf source/
+  - /bin/cp -rf ../agenric.github.io/source ./
+  - git clone https://github.com/Agenric/hexo-theme-next.git themes/next
+  - sed -i'' "/^ *repo/s~github\.com~${GITHUB_TOKEN}@github.com~" _config.yml
+  - hexo clean
+  - hexo generate
+
+after_success:
+  - git init
+  - git config user.name "Travis-CI"
+  - git config user.email "agenricwon@gmail.com"
+  - hexo deploy
