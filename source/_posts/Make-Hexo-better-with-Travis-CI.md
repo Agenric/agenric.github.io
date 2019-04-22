@@ -1,11 +1,11 @@
 ---
-title: 借助Travis-CI使Hexo变得更好
+title: 借助Travis CI使Hexo变得更好
 date: 2019-04-13 21:27:03
 categories:
  - 效率
 tags:
  - Hexo
- - Travis-CI
+ - Travis CI
 ---
 
 对，我懒得写博客，却喜欢折腾，这可能是病...
@@ -93,7 +93,7 @@ script:
 
 after_success:
   - git init
-  - git config user.name "Travis-CI"
+  - git config user.name "Travis CI"
   - git config user.email "agenricwon@gmail.com"
   - hexo d
 
