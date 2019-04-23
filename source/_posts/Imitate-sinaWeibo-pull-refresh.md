@@ -30,7 +30,7 @@ tags:
 
 在viewDidLoad中，我们要修改当前页面的初始状态，包括tableView的偏移位置，顶部导航栏的透明状态，以及导航栏标题。
 
-```objective-c
+```objc
 #pragma mark - setupUI
 - (void)setupUI {
     // tableView
@@ -58,18 +58,18 @@ tags:
 
 * 我们事先给header的view一个NSLayoutConstraint类型的属性，同时我们需要定义关于header的两个宏
 
-```objective-c
+```objc
 #define kTableViewHeaderDefH 200
 #define kTableViewHeaderMinH 64
 ```
 
-```objective-c
+```objc
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeaderH;
 ```
 
 * header的高度要同时满足以下两个条件。根据用户滚动的偏移量来计算tableViewHeaderH.constant的值，我们知道tableView的contentOffset.y初始值是与header和tab的高度和，也就是说他们之间需要满足这样的关系
 
-```objective-c
+```objc
 tableViewHeaderH.constant = kTableViewHeaderDefH - (tableView. contentOffset.y - (header.height + tab.height))
 tableViewHeaderH.constant >= kTableViewHeaderMinH
 ```

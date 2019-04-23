@@ -38,7 +38,7 @@ manager.securityPolicy = [AFSecurityPolicy defaultPolicy];
 
 如何避免这种情况呢，这就说到了本地的证书校验，我们可以直接把CA给你签发的数字证书内置到手机中，并且作为信任的证书，这样当我们再次收到服务端（实际上是Charles）返回给我们证书时，我们会这样做：
 
-```objective-c
+```objc
 AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
 NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"key" ofType:@"cer"];//证书的路径
 NSData *cerData = [NSData dataWithContentsOfFile:cerPath];

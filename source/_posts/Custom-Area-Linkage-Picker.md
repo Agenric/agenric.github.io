@@ -64,7 +64,7 @@ OK，先来看一下数据结构，因为我最开始就是因为没有充分研
 
 DataSource需要返回该picker共有几个组，每个分组下有多少行。
 
-```objective-c
+```objc
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) { // 第一组
         return [self.totalDatas count];
@@ -90,7 +90,7 @@ DataSource需要返回该picker共有几个组，每个分组下有多少行。
 
 Delegate一共提供了三种方法供我们自定义每一个item的显示。分别是返回一个NSString、NSAttributedString、UIView。因为地区的选择无非就是固定item返回对应的字符串，但是有个问题就是要考虑字体的显示是否可以显示完整之类的，所以我们最好选择返回NSAttributedString或自定义UIView这种方式，可定制化更高。这里我选择了使用UIView（UILabel）：
 
-```objective-c
+```objc
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(nullable UIView *)view {
     UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3.0f, 30)];
     [desLabel setBackgroundColor:[UIColor clearColor]];

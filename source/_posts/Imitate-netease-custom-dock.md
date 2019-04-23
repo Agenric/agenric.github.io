@@ -26,7 +26,7 @@ tags:
 `- (void)addItemWithIcon:(NSString *)icon selectedIcon:(NSString *)selectedIcon title:(NSString *)title;`
 内部实现为：
 
-```objective-c
+```objc
 - (void)addItemWithIcon:(NSString *)icon selectedIcon:(NSString *)selectedIcon title:(NSString *)title {
     DockItem *dockItem = [[DockItem alloc]init];
 
@@ -57,7 +57,7 @@ tags:
 在每一次添加新的item的同时，其内部自动的重新去设置每个item的位置以达到友好的显示。
 其次，我们知道每一个item实是上是一个UIButton，所以要做到这个Button的显示跟系统的不一样，我重写了UIButton的两个方法以达到图片与文字上下显示的效果，给定一个图片与文字的高度的比例，我这里设置的kImageRatio = 0.7，代码如下：
 
-```objective-c
+```objc
 #pragma mark 调整内部ImageView的frame
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {
@@ -96,7 +96,7 @@ tags:
 
 我先在MainController里添加了五个子控制器
 
-```objective-c
+```objc
 #pragma mark - Private Methods
 - (void)addChildViewControllers {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:FirstViewController.new];

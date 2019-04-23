@@ -22,7 +22,7 @@ tags:
 
 下面我们首先创建自定义的一个Cell
 
-```objective-c
+```objc
 #import <UIKit/UIKit.h>
 #import "AGTableViewRowAction.h"
 
@@ -72,7 +72,7 @@ tags:
 
 头文件中的两个设置动画时长的属性以及Cell的预设值需要在初始化方法中进行如下设置
 
-```objective-c
+```objc
 self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 
 if (self) {
@@ -90,7 +90,7 @@ return self;
 
 这里我使用了两个临时的局部变量_isMoving _hasMoved来在Cell被拖动的时候标示其状态，使用self.isEditing来判断在当前Cell上是应该响应一般touch事件还是响应它的tableView的didSelectRowAtIndexPath事件。然后我们要在Cell内部拥有一个可变的数组来存储该行Cell右边的action集合，然后最好在layoutSubviews的时候通过代理方法拿到这个集合。
 
-```objective-c
+```objc
 - (void)getActionsArray {
     self.indexPath = [self.tableView indexPathForCell:self];
 
@@ -121,7 +121,7 @@ return self;
 
 下面是touchesMoved中动态改变Cell内部子View的一段代码
 
-```objective-c
+```objc
 CGFloat currentLocationX = [touch locationInView:self.tableView].x;
 CGFloat distance = (self.touchBeganPointX - currentLocationX) * 1.1;
 

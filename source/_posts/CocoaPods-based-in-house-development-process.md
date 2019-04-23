@@ -101,7 +101,7 @@ master
 
 以上箭头所指的文件夹即是pod的索引目录，这里我创建两个测试文件。
 
-```objective-c
+```objc
 //  XXXLog.h
 #import <Foundation/Foundation.h>
 
