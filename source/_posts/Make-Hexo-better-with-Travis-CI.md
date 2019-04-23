@@ -1,5 +1,5 @@
 ---
-title: 借助Travis CI使Hexo变得更好
+title: 借助 Travis CI 使 Hexo 变得更好
 date: 2019-04-13 21:27:03
 categories:
  - 效率

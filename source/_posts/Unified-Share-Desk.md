@@ -17,17 +17,17 @@ tags:
 
 整个AGShareDesk提供三个方法：
 
-## 注册
+```objc
 
-`- (void)registerWithWeiboAppKey:(NSString *)weiboAppKey weChatAppKey:(NSString *)weChatAppKey tencentAppId:(NSString *)tencentAppId;`
+// 注册
+- (void)registerWithWeiboAppKey:(NSString *)weiboAppKey weChatAppKey:(NSString *)weChatAppKey tencentAppId:(NSString *)tencentAppId;
 
-## 分享
+// 分享
+- (void)shareToChannel:(ShareChannel)shareChannel withMessgaeObject:(ShareMessageObject *)message afterDelegate:(id<AGShareDeskDelegate>)afterDelegate;
 
-`- (void)shareToChannel:(ShareChannel)shareChannel withMessgaeObject:(ShareMessageObject *)message afterDelegate:(id<AGShareDeskDelegate>)afterDelegate;`
-
-## 处理分析结果
-
-`- (void)handleApplication:(UIApplication *)application withOpenURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;`
+// 处理分享结果
+- (void)handleApplication:(UIApplication *)application withOpenURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
+```
 
 然后会有一个`ShareMessageObject`，在你分享之前，你需要创建一个 ShareMessageObject 的对象，该对象可以设置分享的标题、内容、链接以及logo的图片，ShareMessageObject 仅提供一个类方法返回一个该对象的实例。
 

@@ -1,5 +1,5 @@
 ---
-title: 如何更好的适配HTTPS之证书验证
+title: 如何更好的适配 HTTPS 之证书验证
 date: 2017-04-20 17:02:46
 categories:
  - 技术

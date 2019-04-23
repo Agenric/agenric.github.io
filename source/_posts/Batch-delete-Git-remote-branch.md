@@ -1,5 +1,5 @@
 ---
-title: 批量删除Git远程分支
+title: 批量删除 Git 远程分支
 date: 2017-12-08 22:17:41
 categories:
  - 技术
