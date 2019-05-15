@@ -33,7 +33,7 @@ script:
   - hexo generate
 
 after_success:
-  - git init
   - git config user.name "Travis-CI"
-  - git config user.email "agenricwon@gmail.com"
+  - git config user.email "AgenricWon@gmail.com"
+  - git init
   - hexo deploy
