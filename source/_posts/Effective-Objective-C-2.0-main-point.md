@@ -66,11 +66,11 @@ tags:
 
     | 关联类型 | 等效的 `@property` 属性 |
     | ------------ | ------------ |
-    | OBJC_ASSOCIATION_ASSIGN | assign |
+    | OBJC_ASSOCIATION_ASSIGN           | assign |
     | OBJC_ASSOCIATION_RETAIN_NONATOMIC | nonatomic, retain |
-    | OBJC_ASSOCIATION_COPY_NONATOMIC | nonatomic, copy |
-    | OBJC_ASSOCIATION_RETAIN | retain |
-    | OBJC_ASSOCIATION_COPY | copy |
+    | OBJC_ASSOCIATION_COPY_NONATOMIC   | nonatomic, copy |
+    | OBJC_ASSOCIATION_RETAIN           | retain |
+    | OBJC_ASSOCIATION_COPY             | copy |
 
     1. 下列方法可以管理关联对象：
         1. `void objc_setAssociatedObject(id object, void *key, id value, objc_AssociationPolicy policy)` 此方法以给定的键和策略为某对象设置关联对象值。
@@ -82,4 +82,6 @@ tags:
 11. 理解 objc_msgSend 的作用
     1. `objc_msgSend_stret`。如果待发送的消息要返回结构体，那么可交由此函数处理。只有当 CPU 的寄存器能够容纳得下消息返回类型时，这个函数才能处理此消息。若是返回值无法容纳于 CPU 寄存器中（比如说返回的结构体太大了），那么就由另一个函数执行派发。此时，那个函数会通过分配在栈上的某个变量来处理消息所返回的结构体。
     2. `objc_msgSend_fpret`。如果消息返回的是浮点数，那么可交由此函数处理。在某些架构的 CPU 中调用函数时，需要对 “浮点数寄存器”（floating-point register）做特殊处理，也就是说，通常所用的 `objc_msgSend` 在这种情况下并不适合。这个函数是为了处理 x86 等架构 CPU 中某些令人稍觉惊讶的奇怪情况。
-    3. `objc_msgSendSuper`。如果要给超类发消息，例如 `[super message:parameter]`，那么久交由此函数处理。也有另外两个与 `objc_msgSend_stret` 和 `objc_msgSend_fpret` 等效的函数，用于处理发送给 super 的相应消息。
+    3. `objc_msgSendSuper`。如果要给超类发消息，例如 `[super message:parameter]`，那么就交由此函数处理。也有另外两个与 `objc_msgSend_stret` 和 `objc_msgSend_fpret` 等效的函数，用于处理发送给 super 的相应消息。
+    4. 消息由接收者、选择子及参数构成。给某对象 “发送消息”（invoke a message）也就相当于在该对象上 “调用方法”（call a method）。
+    5. 发给某对象的全部消息都要由 “动态消息派发系统”（dynamic message dispatch system）来处理，该系统会查出对应的方法，并执行其代码。
