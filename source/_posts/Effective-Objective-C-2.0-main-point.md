@@ -64,13 +64,13 @@ tags:
    4. 从类族的公共抽象基类中继承子类时要当心，若有开发文档，则应首先阅读。
 10. 在既有类中使用关联对象存放自定义数据
 
-    | 关联类型 | 等效的 `@property` 属性 |
-    | ------------ | ------------ |
-    | OBJC_ASSOCIATION_ASSIGN           | assign |
-    | OBJC_ASSOCIATION_RETAIN_NONATOMIC | nonatomic, retain |
-    | OBJC_ASSOCIATION_COPY_NONATOMIC   | nonatomic, copy |
-    | OBJC_ASSOCIATION_RETAIN           | retain |
-    | OBJC_ASSOCIATION_COPY             | copy |
+    | 关联类型               | 等效的 `@property` 属性               |
+    | ---------------- | ---------------- |
+    | OBJC_ASSOCIATION_ASSIGN         | assign         |
+    | OBJC_ASSOCIATION_RETAIN_NONATOMIC           | nonatomic, retain         |
+    | OBJC_ASSOCIATION_COPY_NONATOMIC  | nonatomic, copy        |
+    | OBJC_ASSOCIATION_RETAIN | retain           |
+    | OBJC_ASSOCIATION_COPY      | copy |
 
     1. 下列方法可以管理关联对象：
         1. `void objc_setAssociatedObject(id object, void *key, id value, objc_AssociationPolicy policy)` 此方法以给定的键和策略为某对象设置关联对象值。
@@ -85,3 +85,35 @@ tags:
     3. `objc_msgSendSuper`。如果要给超类发消息，例如 `[super message:parameter]`，那么就交由此函数处理。也有另外两个与 `objc_msgSend_stret` 和 `objc_msgSend_fpret` 等效的函数，用于处理发送给 super 的相应消息。
     4. 消息由接收者、选择子及参数构成。给某对象 “发送消息”（invoke a message）也就相当于在该对象上 “调用方法”（call a method）。
     5. 发给某对象的全部消息都要由 “动态消息派发系统”（dynamic message dispatch system）来处理，该系统会查出对应的方法，并执行其代码。
+12. 理解消息转发机制
+    1. 若对象无法响应某个选择子，则进入消息转发流程。
+    2. 通过运行期的动态方法解析功能，我们可以在需要用到某个方法时再将其加入类中。
+    3. 对象可以把其无法解读的某些选择子转交给其他对象来处理。
+    4. 经过上述两步之后，如果还是没办法处理选择子，那就启动完整的消息转发机制。
+13. 用 “方法调配技术” 调试 “黑盒方法”
+    1. 在运行期，可以向类中新增或替换选择子所对应的方法实现。
+    2. 使用另一份实现来替换原有的方法实现，这道工序叫做 “方法调配”，开发者常用此技术向原有实现中添加新功能。
+    3. 一般来说，只有调试程序的时候才需要在运行期修改方法实现，这种做法不宜滥用。
+14. 理解 “类对象” 的用意
+    1. 每个实例都有一个指向 Class 对象的指针，用以表明其类型，而这些 Class 对象则构成了类的继承体系。
+    2. 如果对象类型无法在编译期确定，那么就应该使用类型信息查询方法来探知。
+    3. 尽量使用类型信息查询方法来确定对象类型，而不要直接比较类对象，因为某些对象可能实现了消息转发功能。
+15. 用前缀避免命名空间冲突
+    1. 选择与你的公司、应用程序或二者皆有关联之名称做为类名的前缀。
+    2. 若自己开发的程序库中用到了第三方库，则应为其中的名称加上前缀。
+16. 提供 “全能初始化（Designated Initializer）方法”
+    1. 在类中提供一个全能初始化方法，并于文档里声明。其他初始化方法均应调用此方法。
+    2. 若全能初始化方法与超类不同，则需覆写超类中的对应方法。
+    3. 如果超类的初始化方法不适用子类，那么应该覆写这个超类方法，并在其中抛出异常。
+17. 实现 description 方法
+    1. 实现 description 方法返回一个有意义的字符串，用以描述该实例。
+    2. 若想在调试时打印出更详尽的对象描述信息，则应该实现 debugDescription 方法。
+18. 尽量使用不可变对象
+    1. 尽量创建不可变的对象。
+    2. 若某属性仅可于对象内部修改，则在 “class-continuation 分类” 中将其由 readonly 属性扩展为 readwrite 属性。
+    3. 不要把可变的 collection 作为属性公开，而应提供相关方法，以此修改对象中的可变 collection。
+19. 使用清晰而协调的命名方式
+    1. 起名时应遵从标准的 Objective-C 命名规范，这样创建出来的接口更容易为开发者所理解。
+    2. 方法名要言简意赅，从左至右读起来要像个日常用语中的句子才好。
+    3. 方法名里不要使用缩略后的类型名称。
+    4. 给方法起名时的第一要务就是确保其风格与你自己的代码或所需要集成的框架相符。
