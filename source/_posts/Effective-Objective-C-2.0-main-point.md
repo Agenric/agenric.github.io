@@ -64,13 +64,13 @@ tags:
    4. 从类族的公共抽象基类中继承子类时要当心，若有开发文档，则应首先阅读。
 10. 在既有类中使用关联对象存放自定义数据
 
-    | 关联类型               | 等效的 `@property` 属性               |
-    | ----------- | ---- |
-    | OBJC_ASSOCIATION_ASSIGN         | assign         |
-    | OBJC_ASSOCIATION_RETAIN_NONATOMIC           | nonatomic, retain         |
-    | OBJC_ASSOCIATION_COPY_NONATOMIC  | nonatomic, copy        |
-    | OBJC_ASSOCIATION_RETAIN | retain           |
-    | OBJC_ASSOCIATION_COPY      | copy |
+    | 关联类型                          | 等效的`@property`属性 |
+    | --------------------------------- | --------------------- |
+    | OBJC_ASSOCIATION_ASSIGN           | assign                |
+    | OBJC_ASSOCIATION_RETAIN_NONATOMIC | nonatomic, retain     |
+    | OBJC_ASSOCIATION_COPY_NONATOMIC   | nonatomic, copy       |
+    | OBJC_ASSOCIATION_RETAIN           | retain                |
+    | OBJC_ASSOCIATION_COPY             | copy                  |
 
     1. 下列方法可以管理关联对象：
         1. `void objc_setAssociatedObject(id object, void *key, id value, objc_AssociationPolicy policy)` 此方法以给定的键和策略为某对象设置关联对象值。
