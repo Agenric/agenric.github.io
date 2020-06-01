@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="网易新闻,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Agenric's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="作为系列第一篇文章，就先从最简单的底部的这个Dock栏开始。 示例展示其实说是最简单的，也是应用最广泛的。我们应该看过很多APP的导航界面的样式。基本上就以下两种：  系统原生的UITabBar始终在页面底部，并不跟随界面跳转而隐藏和显示 网易新闻类似的底部TabBar只在每个栏目的首页显示，在第二级或第三级页面隐藏（ps:请自动忽略新闻内容）  自定义底部Item既然是自定义控件，就要尽量做到低">
+<meta name="keywords" content="网易新闻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网易新闻系列-自定义底部 Dock 栏目选择器">
+<meta property="og:url" content="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/index.html">
+<meta property="og:site_name" content="Agenric&#39;s Blog">
+<meta property="og:description" content="作为系列第一篇文章，就先从最简单的底部的这个Dock栏开始。 示例展示其实说是最简单的，也是应用最广泛的。我们应该看过很多APP的导航界面的样式。基本上就以下两种：  系统原生的UITabBar始终在页面底部，并不跟随界面跳转而隐藏和显示 网易新闻类似的底部TabBar只在每个栏目的首页显示，在第二级或第三级页面隐藏（ps:请自动忽略新闻内容）  自定义底部Item既然是自定义控件，就要尽量做到低">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-1.gif">
+<meta property="og:image" content="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-2.gif">
+<meta property="og:image" content="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-3.png">
+<meta property="og:updated_time" content="2020-06-01T15:23:27.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网易新闻系列-自定义底部 Dock 栏目选择器">
+<meta name="twitter:description" content="作为系列第一篇文章，就先从最简单的底部的这个Dock栏开始。 示例展示其实说是最简单的，也是应用最广泛的。我们应该看过很多APP的导航界面的样式。基本上就以下两种：  系统原生的UITabBar始终在页面底部，并不跟随界面跳转而隐藏和显示 网易新闻类似的底部TabBar只在每个栏目的首页显示，在第二级或第三级页面隐藏（ps:请自动忽略新闻内容）  自定义底部Item既然是自定义控件，就要尽量做到低">
+<meta name="twitter:image" content="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/">
+
+
+
+
+
+  <title>网易新闻系列-自定义底部 Dock 栏目选择器 | Agenric's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '92050656-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Agenric's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">独立才会有思想</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Agenric">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Agenric's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">网易新闻系列-自定义底部 Dock 栏目选择器</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-22T08:55:00+00:00">
+                2015-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/22/Imitate-netease-custom-dock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/22/Imitate-netease-custom-dock/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2015/11/22/Imitate-netease-custom-dock/" class="leancloud_visitors" data-flag-title="网易新闻系列-自定义底部 Dock 栏目选择器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作为系列第一篇文章，就先从最简单的底部的这个Dock栏开始。</p>
+<h2 id="示例展示"><a href="#示例展示" class="headerlink" title="示例展示"></a>示例展示</h2><p>其实说是最简单的，也是应用最广泛的。我们应该看过很多APP的导航界面的样式。基本上就以下两种：</p>
+<ul>
+<li>系统原生的UITabBar始终在页面底部，并不跟随界面跳转而隐藏和显示<br><img src="/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-1.gif" alt="系统原生"></li>
+<li>网易新闻类似的底部TabBar只在每个栏目的首页显示，在第二级或第三级页面隐藏（ps:请自动忽略新闻内容）<br><img src="/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-2.gif" alt="网易新闻"></li>
+</ul>
+<h2 id="自定义底部Item"><a href="#自定义底部Item" class="headerlink" title="自定义底部Item"></a>自定义底部Item</h2><p>既然是自定义控件，就要尽量做到低耦合，高内聚。也就是说外部不用知道内部的具体实现原理，只用公开出一个接口供使用方调用即可。<br>在这里，外部告诉我要添加一个新的item，同时告诉我这个item的普通图片、选中图片以及显示文字。Dock内部会根据当前添加的item数量规范的调整显示每一个item的位置及状态。<br>在Dock.h文件中我有一个这个方法:<br><code>- (void)addItemWithIcon:(NSString *)icon selectedIcon:(NSString *)selectedIcon title:(NSString *)title;</code><br>内部实现为：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)addItemWithIcon:(<span class="built_in">NSString</span> *)icon selectedIcon:(<span class="built_in">NSString</span> *)selectedIcon title:(<span class="built_in">NSString</span> *)title &#123;</span><br><span class="line">    DockItem *dockItem = [[DockItem alloc]init];</span><br><span class="line"></span><br><span class="line">    [dockItem setImage:[<span class="built_in">UIImage</span> imageNamed:icon] forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">    [dockItem setImage:[<span class="built_in">UIImage</span> imageNamed:selectedIcon] forState:<span class="built_in">UIControlStateSelected</span>];</span><br><span class="line">    [dockItem setTitle:title forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">    <span class="comment">// 这里你也可以把正常状态和选中状态下的字体颜色开放出去在外部设置</span></span><br><span class="line">    [dockItem setTitleColor:[<span class="built_in">UIColor</span> colorWithRed:<span class="number">137</span>/<span class="number">255.0</span>f green:<span class="number">137</span>/<span class="number">255.0</span>f blue:<span class="number">137</span>/<span class="number">255.0</span>f alpha:<span class="number">1</span>] forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">    [dockItem setTitleColor:[<span class="built_in">UIColor</span> colorWithRed:<span class="number">223</span>/<span class="number">255.0</span>f green:<span class="number">41</span>/<span class="number">255.0</span>f blue:<span class="number">43</span>/<span class="number">255.0</span>f alpha:<span class="number">1</span>] forState:<span class="built_in">UIControlStateSelected</span>];</span><br><span class="line">    [dockItem addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(itemClick:) forControlEvents:<span class="built_in">UIControlEventTouchDown</span>];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:dockItem];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> count = (<span class="keyword">int</span>)<span class="keyword">self</span>.subviews.count;</span><br><span class="line">    <span class="comment">// Dock默认显示第一项</span></span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">1</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> itemClick:dockItem];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">CGFloat</span> width = <span class="keyword">self</span>.frame.size.width / count;</span><br><span class="line">    <span class="built_in">CGFloat</span> height = <span class="keyword">self</span>.frame.size.height;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        DockItem *item = <span class="keyword">self</span>.subviews[i];</span><br><span class="line">        item.tag = i;</span><br><span class="line">        item.frame = <span class="built_in">CGRectMake</span>(width * i, <span class="number">0</span>, width, height)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在每一次添加新的item的同时，其内部自动的重新去设置每个item的位置以达到友好的显示。<br>其次，我们知道每一个item实是上是一个UIButton，所以要做到这个Button的显示跟系统的不一样，我重写了UIButton的两个方法以达到图片与文字上下显示的效果，给定一个图片与文字的高度的比例，我这里设置的kImageRatio = 0.7，代码如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark 调整内部ImageView的frame</span></span><br><span class="line">- (<span class="built_in">CGRect</span>)imageRectForContentRect:(<span class="built_in">CGRect</span>)contentRect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> imageX = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">CGFloat</span> imageY = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">CGFloat</span> imageWidth = <span class="keyword">self</span>.frame.size.width;</span><br><span class="line">    <span class="built_in">CGFloat</span> imageHeight = <span class="keyword">self</span>.frame.size.height * kImageRatio;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(imageX, imageY, imageWidth, imageHeight);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark 调整内部UILable的frame</span></span><br><span class="line">- (<span class="built_in">CGRect</span>)titleRectForContentRect:(<span class="built_in">CGRect</span>)contentRect</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> titleWidth = <span class="keyword">self</span>.frame.size.width;</span><br><span class="line">    <span class="built_in">CGFloat</span> titleHeight = <span class="keyword">self</span>.frame.size.height * (<span class="number">1</span> - kImageRatio);</span><br><span class="line">    <span class="built_in">CGFloat</span> titleX = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">CGFloat</span> titleY = <span class="keyword">self</span>.imageView.frame.size.height - <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">CGRectMake</span>(titleX, titleY, titleWidth, titleHeight);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，比如说我现在要给Dock栏添加一个新闻item，并把这个item需要的两张图片传进去，那么我只需要执行<br><code>[self.dock addItemWithIcon:@&quot;tabbar_icon_news_normal&quot; selectedIcon:@&quot;tabbar_icon_news_highlight&quot; title:@&quot;新闻&quot;];</code>就可以了。</p>
+<h2 id="监听Item点击"><a href="#监听Item点击" class="headerlink" title="监听Item点击"></a>监听Item点击</h2><p>接着我们就来介绍如何做到让底部的这个Dock栏随着控制器的切换而做到自动的跟随每一个需要它跟随的控制器。<br>在日常的开发中，相信大家基本上每个人都做过顶部标题下部菜单类似的APP。并且我相信更多的是第二种的显示方式，细心的人会发现这个Dock栏始终都会跟随每个栏目的第一个控制器，那么我们是不是可以这样考虑，假设说每一个栏目都是一个导航控制器，那么这个导航控制器下可能会push出N多个子控制器，但是这个导航控制器有且只会有一个根(root)控制器，也就是说我们的Dock栏只需要跟随这个导航控制器的根控制器即可。SO…在这里边其实要处理的无非就是底部Dock这个View。</p>
+<p>那么先说一下我的思路：</p>
+<ul>
+<li>整个APP一般可能会有3-5个一级的界面，那么先搞一个MainController来管理这么多子页面</li>
+<li>一般情况下每个一级的界面都会有2-3个子页面，可见每个子页面都是有一个导航控制器包着的页面</li>
+<li>我们要实现的功能就是在每个导航控制器的根控制器显示在最前的时候，显示底部Dock栏，那么如果当前显示在最前的控制器不是导航控制器的根控制器时，就要隐藏Dock栏</li>
+<li>这样就很容易想到UINavigationController的代理方法，我们让MainController成为它的每一个子页面的导航控制器的代理，然后统一在代理方法里去做处理</li>
+</ul>
+<p>我先在MainController里添加了五个子控制器</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark - Private Methods</span></span><br><span class="line">- (<span class="keyword">void</span>)addChildViewControllers &#123;</span><br><span class="line">    <span class="built_in">UINavigationController</span> *nav = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:FirstViewController.new];</span><br><span class="line">    nav.delegate = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addChildViewController:nav];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewController</span> *vc = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    nav = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:vc];</span><br><span class="line">    vc.view.backgroundColor = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line">    nav.delegate = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addChildViewController:nav];</span><br><span class="line"></span><br><span class="line">    vc = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    nav = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:vc];</span><br><span class="line">    vc.view.backgroundColor = [<span class="built_in">UIColor</span> orangeColor];</span><br><span class="line">    nav.delegate = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addChildViewController:nav];</span><br><span class="line"></span><br><span class="line">    vc = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    nav = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:vc];</span><br><span class="line">    vc.view.backgroundColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">    nav.delegate = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addChildViewController:nav];</span><br><span class="line"></span><br><span class="line">    vc = [[<span class="built_in">UIViewController</span> alloc] init];</span><br><span class="line">    nav = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:vc];</span><br><span class="line">    vc.view.backgroundColor = [<span class="built_in">UIColor</span> grayColor];</span><br><span class="line">    nav.delegate = <span class="keyword">self</span>;</span><br><span class="line">    [<span class="keyword">self</span> addChildViewController:nav];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="处理点击，更新显示"><a href="#处理点击，更新显示" class="headerlink" title="处理点击，更新显示"></a>处理点击，更新显示</h2><p>既然是MainController来管理所有的子栏目，那么很显然Dock应该属于MainController的View的子view。也就是说实事上在MainController上显示的每一个子导航控制器的frame的size的height并不是填充了整个屏幕。<br><img src="/2015/11/22/Imitate-netease-custom-dock/Imitate-netease-custom-dock-3.png" alt="MainController中区域分配"><br>那么既然Dock栏并不属于某一个子栏目，我们要怎样使它随着任何一个导航控制器的根控制器来回移动呢，一个处理方法就是：当我们在UINavigationController的代理方法中来做处理。因为当前主控制器(Maincontroller)是所有子栏目导航控制器的代理，这样无论哪一个栏目中的控制器被点击，MainController都能及时的做出处理。<br>既然我们已经知道当前页面中的逻辑关系，那么接下来要做的就是监听每一次将要push或pop新控制器时，判断当前控制器是不是根控制器。<br>假如现在要展示一个新的控制器，如果它不是根控制器那么就要拉长当前导航控制器的height，并且此时将Dock从main上边移除，将其添加到root控制器上，这样在某一个导航控制器push出一个新的子页面时，Dock就会跟随root控制器一起被隐藏；同样如果它是根控制器那么就要把拉长的导航控制器的height变回初始高度，并且把Dock从根控制器上重新移回到main上。这里要注意的一点就是，一个操作是在新控制器将要展示之前就要做，另一个是在新控制器展示出来之后再做。至于哪一个是will哪一个是did，大家可以自己考虑一下，如果你真的不太理解可以去看一下这个项目demo的源码(地址在下面会给出)。</p>
+<p>Dock栏的移动与隐藏基本上就这样，那么Dock栏既然充当的是一个UITabBar的作用，也就是说我们在选择某一个栏目的同时MainController应该及时的隐藏旧的栏目并显示新的栏目，然而这并不难办，使用代理很简单的就能实现这个功能，在Dock上的item接收到点击事件时改变自身显示的同时告诉自己的代理你现在要给我显示第几个子控制器就行了。至于代码我就不再在这贴了。<br>最后，我又给这个Dock添加了一个新的小功能，大家在上图应该也能看到第三个和第四个item右上角的一个mark小红点。提示用户某一个栏目中可能有新消息或是活动，添加新消息提示的mark点共有两种模式，一种是只显示有新消息标示而不显示具体数目，另一种是直接显示新消息的条数，那么具体使用哪种模式就看个人爱好了。</p>
+<hr>
+<blockquote>
+<p>注：此文章首发在<a href="http://www.jianshu.com" target="_blank" rel="noopener">简书</a>转载请说明出处。<br>如果你想看到完整的代码，可以去<a href="https://github.com/Agenric/AGBottomDock" target="_blank" rel="noopener">这里</a>。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网易新闻/" rel="tag"># 网易新闻</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/Imitate-sinaWeibo-pull-refresh/" rel="next" title="模仿新浪微博个人中心界面导航栏渐隐渐现效果">
+                <i class="fa fa-chevron-left"></i> 模仿新浪微博个人中心界面导航栏渐隐渐现效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/02/Custom-Area-Linkage-Picker/" rel="prev" title="自定义地区联动选择器">
+                自定义地区联动选择器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Agenric">
+          <p class="site-author-name" itemprop="name">Agenric</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Agenric" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/712360050" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例展示"><span class="nav-number">1.</span> <span class="nav-text">示例展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义底部Item"><span class="nav-number">2.</span> <span class="nav-text">自定义底部Item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听Item点击"><span class="nav-number">3.</span> <span class="nav-text">监听Item点击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理点击，更新显示"><span class="nav-number">4.</span> <span class="nav-text">处理点击，更新显示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Agenric</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261280866&web_id=1261280866" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://agenric.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.agenric.cn/2015/11/22/Imitate-netease-custom-dock/';
+          this.page.identifier = '2015/11/22/Imitate-netease-custom-dock/';
+          this.page.title = '网易新闻系列-自定义底部 Dock 栏目选择器';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://agenric.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("pejtFJaXr3WbADJP3ivScqKr-gzGzoHsz", "RbPGACsiWhxOjP3fyt6Agp1r");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

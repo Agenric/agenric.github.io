@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="AV Foundation,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Agenric's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="播放和录制音频AV Foundation定义了7种分类来描述应用程序所使用的音频行为：    分类 作用 是否允许混音 音频输入 音频输出     Ambient 游戏、效率应用程序 √  √   Solo Ambient（默认） 游戏、效率应用程序   √   Playback 音频和视频播放器 可选  √   Record 录音机、音频捕捉  √    Play and Record VoIP">
+<meta name="keywords" content="AV Foundation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AV Foundation 从0到1-播放和录制音频">
+<meta property="og:url" content="http://blog.agenric.cn/2017/05/27/AV-Foundation-from-zero-to-one-02/index.html">
+<meta property="og:site_name" content="Agenric&#39;s Blog">
+<meta property="og:description" content="播放和录制音频AV Foundation定义了7种分类来描述应用程序所使用的音频行为：    分类 作用 是否允许混音 音频输入 音频输出     Ambient 游戏、效率应用程序 √  √   Solo Ambient（默认） 游戏、效率应用程序   √   Playback 音频和视频播放器 可选  √   Record 录音机、音频捕捉  √    Play and Record VoIP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-01T15:23:27.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AV Foundation 从0到1-播放和录制音频">
+<meta name="twitter:description" content="播放和录制音频AV Foundation定义了7种分类来描述应用程序所使用的音频行为：    分类 作用 是否允许混音 音频输入 音频输出     Ambient 游戏、效率应用程序 √  √   Solo Ambient（默认） 游戏、效率应用程序   √   Playback 音频和视频播放器 可选  √   Record 录音机、音频捕捉  √    Play and Record VoIP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.agenric.cn/2017/05/27/AV-Foundation-from-zero-to-one-02/">
+
+
+
+
+
+  <title>AV Foundation 从0到1-播放和录制音频 | Agenric's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '92050656-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Agenric's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">独立才会有思想</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.agenric.cn/2017/05/27/AV-Foundation-from-zero-to-one-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Agenric">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Agenric's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AV Foundation 从0到1-播放和录制音频</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-27T08:30:52+00:00">
+                2017-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/27/AV-Foundation-from-zero-to-one-02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/27/AV-Foundation-from-zero-to-one-02/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/27/AV-Foundation-from-zero-to-one-02/" class="leancloud_visitors" data-flag-title="AV Foundation 从0到1-播放和录制音频">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="播放和录制音频"><a href="#播放和录制音频" class="headerlink" title="播放和录制音频"></a>播放和录制音频</h2><p>AV Foundation定义了7种分类来描述应用程序所使用的音频行为：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>作用</th>
+<th>是否允许混音</th>
+<th>音频输入</th>
+<th>音频输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ambient</td>
+<td>游戏、效率应用程序</td>
+<td>√</td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td>Solo Ambient（默认）</td>
+<td>游戏、效率应用程序</td>
+<td></td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td>Playback</td>
+<td>音频和视频播放器</td>
+<td>可选</td>
+<td></td>
+<td>√</td>
+</tr>
+<tr>
+<td>Record</td>
+<td>录音机、音频捕捉</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>Play and Record</td>
+<td>VoIP、语音聊天</td>
+<td>可选</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>Audio Processing</td>
+<td>离线会话处理</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Multi-Route</td>
+<td>使用外部硬件的高级A/V应用程序</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<p>所有的iOS应用程序都自动带有一个默认的音频会话，分类名称为 Solo Ambient。</p>
+<p>针对音频的播放和录制，一共有两个比较重要的类 <code>AVAudioPlayer</code> 和 <code>AVAudioRecorder</code> 。</p>
+<h3 id="AVAudioPlayer"><a href="#AVAudioPlayer" class="headerlink" title="AVAudioPlayer"></a>AVAudioPlayer</h3><blockquote>
+<p>可以播放本地的音频文件，不可以用来播放网络音频</p>
+</blockquote>
+<h4 id="播放中的控制"><a href="#播放中的控制" class="headerlink" title="播放中的控制"></a>播放中的控制</h4><p><strong>修改播放器的音量：</strong> 播放器的音量独立于系统的音量，可以对 AVAudioPlayer 的 volume 属性值进行0.0（静音）~1.0（最大音量）的设置。</p>
+<p><strong>修改播放器的Pan值：</strong> 我们可以对 AVAudioPlayer 的 pan 属性值进行-1.0（极左）~1.0（极右）的设置，例如你在耳机中听到一辆车从你的左侧飞驰到右侧，那么就是这个值在起作用了。</p>
+<p><strong>调整播放率：</strong> 我们可以对 AVAudioPlayer 的 rate 属性值进行0.5（半速）~2.0（2倍速）的设置，即加速播放和减速播放。</p>
+<p><strong>调整循环模式：</strong> 我们可以对 AVAudioPlayer 的 numberOfLoops 值进行任意整数的设置，该属性值如果设置为大于0的数时则可以实现n此的循环播放，如果设置为-1则会导致无限循环。</p>
+<p><strong>音频计量：</strong> 我们可以通过设置 AVAudioPlayer 的 meteringEnabled 属性值的YES或NO，来决定是否读取当期播放的音频的 level metering。</p>
+<p>等等…</p>
+<p>前面我们说过，所有的iOS应用默认的音频会话分类为 Solo Ambient ，那么，很显然如果我们要做一款基于音频的应用的话，默认的分类是满足不了我们的要求的。所以我们最好在 didFinishedLaunch 方法中设置音频会话类型。即 AVAudioSessionCategoryXXX。然后记得激活会话。</p>
+<p>其次如果我们需要在应用程序在后台运行的时候依然可以播放音频的话，我们需要在应用程序的 Info.plist 文件中添加一个新的 Required background modes 类型的数组，然后在数组中添加一个 App plays audio or streams audio/video using AirPlay 的选项。</p>
+<h4 id="处理中断事件"><a href="#处理中断事件" class="headerlink" title="处理中断事件"></a>处理中断事件</h4><p>有时候我们在播放音频的时候可能会被一些事情打断，比如说有电话呼入、有闹钟响起、有微信视频邀请等等…所以，处理中断事件是必须的，我们需要确保当前的音频播放被打断之后最好有一种比较友好的响应方式。</p>
+<p>首先，我们要注册中断通知 <code>AVAudioSessionInterruptionNotification</code> ，通过判断 notification.userInfo 中的 AVAudioSessionInterruptionTypeKey 所对应的键值来确认当前的中断操作是开始还是结束。然后需要根据对应的操作来做出相应的处理。</p>
+<h4 id="处理线路改变"><a href="#处理线路改变" class="headerlink" title="处理线路改变"></a>处理线路改变</h4><p>假如说我们正在用手机播放音频，这时如果我插入了耳机那证明我这时候想切换到耳机来播放音频。反之，如果我正在使用耳机播放音频，这时我断开耳机的连接之后预期的结果应该是暂停播放。</p>
+<p>同样，系统默认并不会帮我们做这些操作，这时需要注册线路变化通知 <code>AVAudioSessionRouteChangeNotification</code> ，该通知的userInfo字典中包含线路被切换的原因的 AVAudioSessionRouteChangeReasonKey 值。该值代表一个无符号的整数。</p>
+<p>那么耳机断开这个事件对应的原因为 AVAudioSessionRouteChangeReasonOldDeviceUnavailable 。事实上，从这个原因的字面意思可以看出，这个通知其实告诉监听者的是旧的设备不可用而导致的线路改变，这也就是说其实耳机断开的事件相对于这个通知来说是充分不必要条件，什么意思呢，就是耳机断开会导致 AVAudioSession 发送该通知，但 AVAudioSession 发出该通知并不一定是因为耳机被断开。所以，你懂了？</p>
+<p>这样的话，我们在接收到该通知之后，必须再次向 notification.userInfo 提出请求，以获得其中用于描述前一个线路的 AVAudioSessionRouteDescription 。该描述信息整合了一个输入的 NSArray 和一个输出的 NSArray。数组中的元素都是 AVAudioSessionPortDescription 的实例，用于描述不同的I/O接口属性。</p>
+<p>在 AVFoundation 框架的 AVAudioSession.h 文件中详细定义了 <code>input port types</code> 和 <code>output port types</code> 以及同时代表 input 和 output 的 <code>port types that refer to either input or output</code> 各种类型。</p>
+<p>整个处理逻辑：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)handleRouteChange:(<span class="built_in">NSNotification</span> *)notification &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s %@"</span>, __func__, notification.userInfo);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *info = notification.userInfo;</span><br><span class="line">    <span class="built_in">AVAudioSessionRouteChangeReason</span> reason = [info[<span class="built_in">AVAudioSessionRouteChangeReasonKey</span>] unsignedIntegerValue];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (reason == <span class="built_in">AVAudioSessionRouteChangeReasonOldDeviceUnavailable</span>) &#123;</span><br><span class="line">        <span class="built_in">AVAudioSessionRouteDescription</span> *previousRoute = info[<span class="built_in">AVAudioSessionRouteChangePreviousRouteKey</span>];</span><br><span class="line">        <span class="built_in">AVAudioSessionPortDescription</span> *previousOutput = previousRoute.outputs[<span class="number">0</span>];</span><br><span class="line">        <span class="built_in">NSString</span> *portType = previousOutput.portType;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ([portType isEqualToString:<span class="built_in">AVAudioSessionPortHeadphones</span>]) &#123;</span><br><span class="line">            [<span class="keyword">self</span> stop];</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">self</span>.delegate) &#123;</span><br><span class="line">                [<span class="keyword">self</span>.delegate playbackStopped];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AVAudioRecorder"><a href="#AVAudioRecorder" class="headerlink" title="AVAudioRecorder"></a>AVAudioRecorder</h3><p>相对于 AVAudioPlayer 的兄弟类。 AVAudioRecorder 可以使用设备内置的麦克风或外部音频设备（比如数字音频接口或USB麦克风等）进行录制。</p>
+<p>创建 AVAudioRecorder 实例时需要为其提供数据的一些信息，分别是：</p>
+<ul>
+<li>用于表示音频流写入文件的本地 URL。</li>
+<li>包含用于配置录音会话键值信息的 NSDictionary 对象。</li>
+<li>用于捕捉初始化阶段各种错误的 NSError 指针。</li>
+</ul>
+<p>同样，在初始化完成之后，立即调用 prepareToRecord 方法，会将录制启动时的延时降到最小。</p>
+<p>在上边第二条，配置录音会话键值信息的 NSDictionary 对象这一步中的键值信息也值得讨论一番。我们只简要的来看一些基本的键值信息。</p>
+<p><strong>音频格式：</strong> AVFormatKey</p>
+<p><strong>采样率：</strong> AVSampleRateKey 标准的采样率一般有8000、16000、22050或44100几种。</p>
+<p><strong>通道数：</strong> AVNumberOfChannelKey 指定默认值1意味着单声道录制，设置2意味着使用立体声录制。除非使用外部硬件进行录制，否则通常应该创建单声道录音。</p>
+<p><strong>位深度：</strong> AVEncoderBitDepthHintKey 可以理解为计算机声卡处理声音的解析度。这个数值越大，解析度就越高，录制和回放的声音就越真实。</p>
+<p>等等…</p>
+<p>先回到创建 AVAudioRecorder 实例时我们提供的音频流的本地 URL，一般该 URL 最好是在 tmp 文件夹。在录制完成之后，通常将该文件复制到 Documents 文件夹中保存。音频录制同样支持暂停，调用 AVAudioRecorder 的 pause 方法即可暂停录制，再次调用 record 方法即可继续录制。通常我们在录制完成时最好能给用户一个友好的提示告诉他录制完成，并请求用户完成保存前的一些操作（命名）。</p>
+<p>相对于音频播放来说，音频录制可能要说的东西并没有很多。接下来我们看一下 Audio Metering。</p>
+<h3 id="Audio-Metering"><a href="#Audio-Metering" class="headerlink" title="Audio Metering"></a>Audio Metering</h3><p>Audio Metering 堪称 AVAudioRecorder 和 AVAudioPlayer 中最强大和最实用的功能。Audio Metering 可以让开发者读取音频的平均分贝和峰值分贝数据。开发者可以根据这些数据以可视化的方式将声音的大小波动效果呈献给用户。</p>
+<p>两个类使用的方法都是 <code>averagePowerForChannel:</code> 和 <code>peakPowerForChannel:</code> 。两个方法都会返回一个表示分贝(dB)等级的浮点值。这个范围从表示最大分贝的0dB(fullscale)到表示最小分贝或静音的-160dB。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AV-Foundation/" rel="tag"># AV Foundation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/26/AV-Foundation-from-zero-to-one-01/" rel="next" title="AV Foundation 从0到1-入门">
+                <i class="fa fa-chevron-left"></i> AV Foundation 从0到1-入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/08/Batch-delete-Git-remote-branch/" rel="prev" title="批量删除 Git 远程分支">
+                批量删除 Git 远程分支 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Agenric">
+          <p class="site-author-name" itemprop="name">Agenric</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Agenric" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/712360050" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#播放和录制音频"><span class="nav-number">1.</span> <span class="nav-text">播放和录制音频</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AVAudioPlayer"><span class="nav-number">1.1.</span> <span class="nav-text">AVAudioPlayer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#播放中的控制"><span class="nav-number">1.1.1.</span> <span class="nav-text">播放中的控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理中断事件"><span class="nav-number">1.1.2.</span> <span class="nav-text">处理中断事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理线路改变"><span class="nav-number">1.1.3.</span> <span class="nav-text">处理线路改变</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVAudioRecorder"><span class="nav-number">1.2.</span> <span class="nav-text">AVAudioRecorder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Audio-Metering"><span class="nav-number">1.3.</span> <span class="nav-text">Audio Metering</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Agenric</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261280866&web_id=1261280866" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://agenric.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.agenric.cn/2017/05/27/AV-Foundation-from-zero-to-one-02/';
+          this.page.identifier = '2017/05/27/AV-Foundation-from-zero-to-one-02/';
+          this.page.title = 'AV Foundation 从0到1-播放和录制音频';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://agenric.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("pejtFJaXr3WbADJP3ivScqKr-gzGzoHsz", "RbPGACsiWhxOjP3fyt6Agp1r");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
